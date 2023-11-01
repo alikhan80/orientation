@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Phone Orientation Detection</title>
+    <title>Text Orientation for iPhone</title>
     <style>
         body {
             display: flex;
@@ -23,10 +23,22 @@
     </style>
 </head>
 <body>
-    <div id="textbox">Level</div>
+    <div id="textbox">This is oriented text</div>
 
     <script>
-        window.addEventListener('devicemotion', handleMotion);
+        if (typeof DeviceMotionEvent.requestPermission === 'function') {
+            DeviceMotionEvent.requestPermission()
+                .then(permissionState => {
+                    if (permissionState === 'granted') {
+                        window.addEventListener('devicemotion', handleMotion);
+                    } else {
+                        console.error('Permission denied for device motion access.');
+                    }
+                })
+                .catch(console.error);
+        } else {
+            console.error('Device motion permissions are not supported in this browser.');
+        }
 
         function handleMotion(event) {
             const accelerationX = event.accelerationIncludingGravity.x;
