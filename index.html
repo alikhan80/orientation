@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Phone Orientation Detection</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            overflow: hidden;
+        }
+
+        #textbox {
+            width: 300px;
+            height: 100px;
+            text-align: center;
+            font-size: 24px;
+            background-color: #f0f0f0;
+            transition: transform 0.2s;
+        }
+    </style>
+</head>
+<body>
+    <div id="textbox">Level</div>
+
+    <script>
+        window.addEventListener('devicemotion', handleMotion);
+
+        function handleMotion(event) {
+            const accelerationX = event.accelerationIncludingGravity.x;
+            const accelerationY = event.accelerationIncludingGravity.y;
+
+            const rotation = Math.atan2(accelerationY, accelerationX);
+            const rotationDegrees = rotation * (180 / Math.PI);
+
+            document.getElementById('textbox').style.transform = `rotate(${-rotationDegrees}deg)`;
+        }
+    </script>
+</body>
+</html>
