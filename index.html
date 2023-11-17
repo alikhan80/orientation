@@ -1,54 +1,23 @@
-<!DOCTYPE html>
 <html>
-<head>
-    <title>Text Orientation for iPhone</title>
-    <style>
-        body {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
-            overflow: hidden;
-        }
+    <head>
+        <title>
+            Orientation
+        </title>
 
-        #textbox {
-            width: 300px;
-            height: 100px;
-            text-align: center;
-            font-size: 24px;
-            background-color: #f0f0f0;
-            transition: transform 0.2s;
-        }
-    </style>
-</head>
-<body>
-    <div id="textbox">This is oriented text</div>
+        <script>
+            window.addEventListener('deviceorientation', handleOrientation);
 
-    <script>
-        if (typeof DeviceMotionEvent.requestPermission === 'function') {
-            DeviceMotionEvent.requestPermission()
-                .then(permissionState => {
-                    if (permissionState === 'granted') {
-                        window.addEventListener('devicemotion', handleMotion);
-                    } else {
-                        console.error('Permission denied for device motion access.');
-                    }
-                })
-                .catch(console.error);
-        } else {
-            console.error('Device motion permissions are not supported in this browser.');
-        }
+            function handleOrientation(event) {
+                var output = document.getElementById("output");
+                var properties = "";
+                for(var prop in event){
+                    properties += i + ": " + event[i] + "<br>";
+                }
+                output.innerHTML = properties;
+        </script>
+    </head>
 
-        function handleMotion(event) {
-            const accelerationX = event.accelerationIncludingGravity.x;
-            const accelerationY = event.accelerationIncludingGravity.y;
-
-            const rotation = Math.atan2(accelerationY, accelerationX);
-            const rotationDegrees = rotation * (180 / Math.PI);
-
-            document.getElementById('textbox').style.transform = `rotate(${-rotationDegrees}deg)`;
-        }
-    </script>
-</body>
+    <body>
+        
+    </body>
 </html>
